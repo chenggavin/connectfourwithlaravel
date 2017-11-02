@@ -23,12 +23,19 @@ class GameController extends Controller
       // Did anyone win?
       $isWon = $this->checkBoard($board);
       if ($isWon) {
-        // TODO: display a message
+        // display a message
+        $game->message = $game->players[$game->turn % 2] . " won!";
         // mark game as no longer in progress
         $game->in_progress = false;
       }
       // TODO: Is it a draw?
-      // It's a draw if turn = ??? and nobody has won
+      // It's a draw if turn = 42 and nobody has won
+      if ($game->turn === 42) {
+        // display a message
+        $game->message = "It's a draw!";
+        // mark game as no longer in progress
+        $game->in_progress = false;
+      }
       // Increment turn counter
       $game->turn++;
       $game->board = json_encode($board);
@@ -43,25 +50,87 @@ class GameController extends Controller
     // $wins is the set of lines on the board that represent wins
     $wins = [
       [ [0,0], [0,1], [0,2], [0,3] ],
-      [ [1,0], [1,1], [1,2], [1,3] ]
+      [ [1,0], [1,1], [1,2], [1,3] ],
+      [ [2,0], [2,1], [2,2], [2,3] ],
+      [ [3,0], [3,1], [3,2], [3,3] ],
+      [ [4,0], [4,1], [4,2], [4,3] ],
+      [ [5,0], [5,1], [5,2], [5,3] ],
+      [ [0,1], [0,2], [0,3], [0,4] ],
+      [ [1,1], [1,2], [1,3], [1,4] ],
+      [ [2,1], [2,2], [2,3], [2,4] ],
+      [ [3,1], [3,2], [3,3], [3,4] ],
+      [ [4,1], [4,2], [4,3], [4,4] ],
+      [ [5,1], [5,2], [5,3], [5,4] ],
+      [ [0,2], [0,3], [0,4], [0,5] ],
+      [ [1,2], [1,3], [1,4], [1,5] ],
+      [ [2,2], [2,3], [2,4], [2,5] ],
+      [ [3,2], [3,3], [3,4], [3,5] ],
+      [ [4,2], [4,3], [4,4], [4,5] ],
+      [ [5,2], [5,3], [5,4], [5,5] ],
+      [ [0,3], [0,4], [0,5], [0,6] ],
+      [ [1,3], [1,4], [1,5], [1,6] ],
+      [ [2,3], [2,4], [2,5], [2,6] ],
+      [ [3,3], [3,4], [3,5], [3,6] ],
+      [ [4,3], [4,4], [4,5], [4,6] ],
+      [ [5,3], [5,4], [5,5], [5,6] ],
+      [ [0,0], [1,0], [2,0], [3,0] ],
+      [ [0,1], [1,1], [2,1], [3,1] ],
+      [ [0,2], [1,2], [2,2], [3,2] ],
+      [ [0,3], [1,3], [2,3], [3,3] ],
+      [ [0,4], [1,4], [2,4], [3,4] ],
+      [ [0,5], [1,5], [2,5], [3,5] ],
+      [ [0,6], [1,6], [2,6], [3,6] ],
+      [ [1,0], [2,0], [3,0], [4,0] ],
+      [ [1,1], [2,1], [3,1], [4,1] ],
+      [ [1,2], [2,2], [3,2], [4,2] ],
+      [ [1,3], [2,3], [3,3], [4,3] ],
+      [ [1,4], [2,4], [3,4], [4,4] ],
+      [ [1,5], [2,5], [3,5], [4,5] ],
+      [ [1,6], [2,6], [3,6], [4,6] ],
+      [ [2,0], [3,0], [4,0], [5,0] ],
+      [ [2,1], [3,1], [4,1], [5,1] ],
+      [ [2,2], [3,2], [4,2], [5,2] ],
+      [ [2,3], [3,3], [4,3], [5,3] ],
+      [ [2,4], [3,4], [4,4], [5,4] ],
+      [ [2,5], [3,5], [4,5], [5,5] ],
+      [ [2,6], [3,6], [4,6], [5,6] ],
+      [ [3,0], [2,1], [1,2], [0,3] ],
+      [ [3,1], [2,2], [1,3], [0,4] ],
+      [ [3,2], [2,3], [1,4], [0,5] ],
+      [ [3,3], [2,4], [1,5], [0,6] ],
+      [ [4,0], [3,1], [2,2], [1,3] ],
+      [ [4,1], [3,2], [2,3], [1,4] ],
+      [ [4,2], [3,3], [2,4], [1,5] ],
+      [ [4,3], [3,4], [2,5], [1,6] ],
+      [ [5,0], [4,1], [3,2], [2,3] ],
+      [ [5,1], [4,2], [3,3], [2,4] ],
+      [ [5,2], [4,3], [3,4], [2,5] ],
+      [ [5,3], [4,4], [3,5], [2,6] ],
+      [ [0,0], [1,1], [2,2], [3,3] ],
+      [ [0,1], [1,2], [2,3], [3,4] ],
+      [ [0,2], [1,3], [2,4], [3,5] ],
+      [ [0,3], [1,4], [2,5], [3,6] ],
+      [ [1,0], [2,1], [3,2], [4,3] ],
+      [ [1,1], [2,2], [3,3], [4,4] ],
+      [ [1,2], [2,3], [3,4], [4,5] ],
+      [ [1,3], [2,4], [3,5], [4,6] ],
+      [ [2,0], [3,1], [4,2], [5,3] ],
+      [ [2,1], [3,2], [4,3], [5,4] ],
+      [ [2,2], [3,3], [4,4], [5,5] ],
+      [ [2,3], [3,4], [4,5], [5,6] ]
     ];
     $game_over = false;
     for ($i = 0; $i < count($wins) && !$game_over; $i++) {
-      // $wins[$i] = an array of coordinates
-      // error_log("Checking...\$wins[" . $i . "]");
-      // error_log(print_r($wins[$i], true));
       $game_over = $this->compareLine(
         $board[ $wins[$i][0][0] ][ $wins[$i][0][1] ], 
         $board[ $wins[$i][1][0] ][ $wins[$i][1][1] ], 
         $board[ $wins[$i][2][0] ][ $wins[$i][2][1] ], 
         $board[ $wins[$i][3][0] ][ $wins[$i][3][1] ]
       );
-      error_log("Is the game over? $game_over");
     }
     return $game_over;
   }
   private function compareLine($a, $b, $c, $d) {
-    error_log("Checking...$a, $b, $c, $d");
     return $a !== '' && $a === $b && $a === $c && $a === $d;
   }
   public function game($id) {
@@ -72,9 +141,10 @@ class GameController extends Controller
     $columns = $game->columns;
     $board = json_decode($game->board);
     $in_progress = $game->in_progress;
+    $message = $game->message;
     $currentPlayer = $game->players[$turn % 2];
     
-    return view('board', compact('game_id', 'currentPlayer', 'turn', 'board', 'rows', 'columns', 'in_progress'));
+    return view('board', compact('game_id', 'currentPlayer', 'turn', 'board', 'rows', 'columns', 'in_progress', 'message'));
   }
   public function restart() {
     // TODO: End the old game
