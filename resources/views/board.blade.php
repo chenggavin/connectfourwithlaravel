@@ -13,7 +13,6 @@
 
 <div class="row justify-content-center">
   <div class="message alert mt-5">
-
     @if ($message !== '') 
       
       {{ $message }}
@@ -26,7 +25,6 @@
 
   </div>
 </div>
-
 <div class="row justify-content-center mt-5">
   <div class="drop">
 
